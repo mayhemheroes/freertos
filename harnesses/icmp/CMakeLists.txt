@@ -1,1 +1,1 @@
-create_harness(fuzz_process_icmp)
+create_harness(icmp)

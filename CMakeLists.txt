@@ -53,3 +53,4 @@ endfunction()
 
 # harnesses
 add_subdirectory(harnesses/icmp)
+add_subdirectory(harnesses/arp)

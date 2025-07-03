@@ -38,6 +38,7 @@ To add a new harness create a new folder in the harnesses directory
 that has two files:
  - harness.c
  - CMakeLists.txt
+and the corresponding add_subdirectory in the top-level CMakeLists.txt.
 
 
 The harness.c file must provide an implementation for the
