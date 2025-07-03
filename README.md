@@ -34,12 +34,4 @@ Will build and run a target with the given name.
 
 ## Adding New Harnesses
 
-To add a new harness create a new folder in the harnesses directory
-that has two files:
- - harness.c
- - CMakeLists.txt
-and the corresponding add_subdirectory in the top-level CMakeLists.txt.
-
-
-The harness.c file must provide an implementation for the
-`int mayhem_process_input(char *buf, size_t len)` function, and the CMakeLists.txt must have a call `create_harness(<target-name>)`.
+To add a new harness for target `foo` create a new folder `foo` in the harnesses directory, that contains a `harness.c` file, which implements then `int mayhem_process_input(char *buf, size_t len)` function, and then add to the top-level CMakeLists.txt a call `create_harness(foo)`.

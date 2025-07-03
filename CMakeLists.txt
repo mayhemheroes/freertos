@@ -25,12 +25,21 @@ set( FREERTOS_PLUS_TCP_NETWORK_IF "POSIX" CACHE STRING "" FORCE)
 FetchContent_MakeAvailable(freertos_kernel)
 FetchContent_MakeAvailable(freertos_plus_tcp)
 
+set( SANITIZE "" CACHE STRING "Comma-separated list of compiler sanitizers to enable; empty string disables." )
+
+if( NOT ${SANITIZE} STREQUAL "" )
+  add_compile_options(-fsanitize=${SANITIZE})
+  add_link_options(-fsanitize=${SANITIZE})
+endif()
+add_compile_options(-g)
+target_compile_options(freertos_plus_tcp PUBLIC -g)
+
 add_subdirectory(driver)
 add_subdirectory(middleware)
 
 
 function(create_harness name)
-  add_executable(${name} harness.c)
+  add_executable(${name} harnesses/${name}/harness.c)
   target_link_libraries(${name} driver middleware)
   set(workdir ${CMAKE_BINARY_DIR}/harnesses/${name})
   set_target_properties(${name} PROPERTIES
@@ -42,15 +51,22 @@ project: freertos
 target: ${name}
 duration: 3600
 cmds:
-  - cmd: /${name}
+  - cmd: /${name} @@
 ")
+
+  # probably it is better to use mayhem package here.
+  if(${SANITIZE} STREQUAL "address")
+    file(
+      COPY /usr/lib/x86_64-linux-gnu/libasan.so.6
+      DESTINATION ${workdir}/root/lib
+      FOLLOW_SYMLINK_CHAIN)
+  endif()
   add_custom_target(run_${name}
     DEPENDS ${name}
     COMMAND mayhem run ${workdir}
-
   )
 endfunction()
 
 # harnesses
-add_subdirectory(harnesses/icmp)
-add_subdirectory(harnesses/arp)
+create_harness(icmp)
+create_harness(arp)

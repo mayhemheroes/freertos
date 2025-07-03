@@ -21,5 +21,15 @@ int main(int argc, char *argv[]) {
         err(1, "read");
     }
     close(fd);                  /* it's okay to close stdin as well. */
-    return mayhem_process_input(buf, len);
+
+    /* we copy from the input buffer to make sure that address sanitizer
+     * knows perfectly where is the end of the buffer.  */
+    char *ptr = malloc(len);
+    if (ptr == NULL) {
+        err(1, "malloc");
+    }
+
+    int r = mayhem_process_input(memcpy(ptr, buf, len), len);
+    free(ptr);
+    return r;
 }
