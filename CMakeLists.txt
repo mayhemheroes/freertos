@@ -70,3 +70,4 @@ endfunction()
 # harnesses
 create_harness(icmp)
 create_harness(arp)
+create_harness(udp)
