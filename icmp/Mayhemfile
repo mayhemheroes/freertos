@@ -1,0 +1,5 @@
+project: freertos
+target: icmp-process-no-stubs
+duration: 3600
+cmds:
+  - cmd: /fuzz @@
