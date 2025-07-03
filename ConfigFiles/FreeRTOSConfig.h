@@ -30,6 +30,8 @@
 #ifndef FREERTOS_IP_CONFIG_H
 #define FREERTOS_IP_CONFIG_H
 
+#include <assert.h>
+
 #define _static
 
 /* ivg additions */
@@ -56,6 +58,8 @@
 #define configUSE_MUTEXES                    1
 #define configUSE_COUNTING_SEMAPHORES        1
 #define configTIMER_TASK_STACK_DEPTH         16
+
+#define configASSERT( x ) if( ( x ) == 0 ) vAssertCalled( __FILE__, __LINE__ )
 /* end of ivg additions */
 
 #undef TEST                                /* was 1 set to remove ipFOREVER */

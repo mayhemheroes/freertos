@@ -1,4 +1,6 @@
+#include <stdio.h>
 #include <stdint.h>
+#include <stdlib.h>
 
 #include "FreeRTOS.h"
 
@@ -48,3 +50,8 @@ void vApplicationGetIdleTaskMemory( StaticTask_t ** ppxIdleTaskTCBBuffer,
 }
 
 void vTaskDelay(const TickType_t xTicksToDelay) {}
+
+void vAssertCalled(const char *filename, int linenum) {
+    printf("Assertion failed at %s:%d\n", filename, linenum);
+    exit(1);
+}
