@@ -1,0 +1,2 @@
+add_executable(fuzz_process_icmp harness.c)
+target_link_libraries(fuzz_process_icmp driver middleware)
