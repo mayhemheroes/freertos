@@ -4,6 +4,7 @@ add_library(middleware OBJECT
 )
 
 target_link_libraries(middleware
+  PUBLIC
   freertos_kernel
   freertos_plus_tcp
   freertos_config)
