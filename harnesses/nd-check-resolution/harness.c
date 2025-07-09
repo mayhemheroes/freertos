@@ -1,6 +1,7 @@
 /* Include standard libraries */
 #include <stdio.h>
 #include "FreeRTOS_ND.h"
+#include "mayhem.h"
 
 int mayhem_process_input(char *buf, size_t len) {
     if (len < sizeof(IPPacket_IPv6_t)) {
@@ -15,8 +16,7 @@ int mayhem_process_input(char *buf, size_t len) {
     }
 
     NetworkBufferDescriptor_t net = {};
-    net.pucEthernetBuffer = buf;
-    net.xDataLength = len;
+    init_network_buffer(&net, buf, len);
     BaseType_t r = xCheckRequiresNDResolution(&net);
     printf("processed ipv6 packet with the following outcome: %d\n", r);
 }

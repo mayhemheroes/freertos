@@ -1,5 +1,6 @@
 #include "FreeRTOS_IP.h"
 #include "FreeRTOS_DNS_Parser.h"
+#include "mayhem.h"
 #include <stdio.h>
 
 int mayhem_process_input(char *buf, size_t len) {
@@ -8,8 +9,7 @@ int mayhem_process_input(char *buf, size_t len) {
         return -1;
     }
     NetworkBufferDescriptor_t net = {};
-    net.pucEthernetBuffer = buf;
-    net.xDataLength = len;
+    init_network_buffer(&net, buf, len);
     uint32_t addr = ulDNSHandlePacket(&net);
     printf("parsed dns reply, the address is: %d\n", addr);
 }

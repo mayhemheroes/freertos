@@ -1,5 +1,6 @@
 /* Include standard libraries */
 #include <stdio.h>
+#include "mayhem.h"
 #include "FreeRTOS_ICMP.h"
 
 int mayhem_process_input(char *buf, size_t len) {
@@ -16,8 +17,7 @@ int mayhem_process_input(char *buf, size_t len) {
     }
 
     NetworkBufferDescriptor_t net = {};
-    net.pucEthernetBuffer = buf;
-    net.xDataLength = len;
+    init_network_buffer(&net, buf, len);
     eFrameProcessingResult_t r = ProcessICMPPacket(&net);
     printf("processed ICMP packet with the following outcome: %d\n", r);
 }
