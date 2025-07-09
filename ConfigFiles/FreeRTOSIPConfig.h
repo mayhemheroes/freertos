@@ -46,7 +46,7 @@
 /* definitions made by ivg */
 /* disable vApplicationPingReplyHook  */
 #define ipconfigSUPPORT_OUTGOING_PINGS 0
-
+#define ipconfigUSE_LOOPBACK 1
 /* end of ivg definitions */
 
 /******************************************************************************/

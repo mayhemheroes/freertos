@@ -53,5 +53,5 @@ void vTaskDelay(const TickType_t xTicksToDelay) {}
 
 void vAssertCalled(const char *filename, int linenum) {
     printf("Assertion failed at %s:%d\n", filename, linenum);
-    exit(1);
+    abort();
 }
