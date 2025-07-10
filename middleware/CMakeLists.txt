@@ -1,7 +1,7 @@
 add_library(middleware OBJECT
   callbacks.c
   network.c
-  ${freertos_kernel_SOURCE_DIR}/portable/MemMang/heap_5.c
+  ${freertos_kernel_SOURCE_DIR}/portable/MemMang/heap_3.c
 )
 
 target_link_libraries(middleware

@@ -31,17 +31,20 @@
 #define FREERTOS_IP_CONFIG_H
 
 #include <assert.h>
+#include <stdio.h>
 
 #define _static
 
 /* ivg additions */
+#define iptraceNETWORK_EVENT_RECEIVED(e) new_network_event(e)
+
 #define configUSE_16_BIT_TICKS 0
 #define configMINIMAL_STACK_SIZE   ( ( unsigned short ) 4096 )
 #define configMAX_PRIORITIES                             ( 7 )
 #define configTICK_RATE_HZ                               ( 1000 )
 #define configUSE_IDLE_HOOK                              0
 #define configUSE_TICK_HOOK                              0
-#define configUSE_PREEMPTION                             1
+#define configUSE_PREEMPTION                             0
 #define configUSE_TIMERS                                 0
 #define configGENERATE_RUN_TIME_STATS                    0
 
@@ -53,7 +56,7 @@
 #define configMAC_ISR_SIMULATOR_PRIORITY     ( configMAX_PRIORITIES - 1 )
 #define configSUPPORT_DYNAMIC_ALLOCATION     1
 #define configSUPPORT_STATIC_ALLOCATION      1
-#define configAPPLICATION_ALLOCATED_HEAP     5
+#define configAPPLICATION_ALLOCATED_HEAP     3
 
 #define configUSE_MUTEXES                    1
 #define configUSE_COUNTING_SEMAPHORES        1
@@ -62,7 +65,8 @@
 #define configASSERT( x ) if( ( x ) == 0 ) vAssertCalled( __FILE__, __LINE__ )
 /* end of ivg additions */
 
-#undef TEST                                /* was 1 set to remove ipFOREVER */
+#define TEST
+#define configMAYHEM_IP_CYCLES                4
 
 #define ipconfigUSE_IPv4                    ( 1 )
 #define ipconfigUSE_IPv6                    ( 1 )
@@ -89,6 +93,7 @@
     #define FreeRTOS_printf( X )    configPRINTF( X )
 #endif
 
+#define configPRINTF( X )   printf X
 /* Define the byte order of the target MCU (the MCU FreeRTOS+TCP is executing
  * on).  Valid options are pdFREERTOS_BIG_ENDIAN and pdFREERTOS_LITTLE_ENDIAN. */
 #define ipconfigBYTE_ORDER                         pdFREERTOS_LITTLE_ENDIAN
@@ -163,7 +168,7 @@
  * set to 1 if a valid configuration cannot be obtained from a DHCP server for any
  * reason.  The static configuration used is that passed into the stack by the
  * FreeRTOS_IPInit() function call. */
-#define ipconfigUSE_DHCP                           1
+#define ipconfigUSE_DHCP                           0
 #define ipconfigDHCP_REGISTER_HOSTNAME             1
 #define ipconfigDHCP_USES_UNICAST                  1
 
@@ -344,7 +349,7 @@
 
 #define ipconfigARP_STORES_REMOTE_ADDRESSES      ( 1 )
 
-#define ipconfigARP_USE_CLASH_DETECTION          ( 1 )
+#define ipconfigARP_USE_CLASH_DETECTION          ( 0 )
 
 #define ipconfigDHCP_FALL_BACK_AUTO_IP           ( 1 )
 

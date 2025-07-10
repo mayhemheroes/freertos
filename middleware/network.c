@@ -24,18 +24,18 @@ const uint8_t ucDefaultMACAddress_IPv6[ ipMAC_ADDRESS_LENGTH_BYTES ] = { 0x11, 0
 void prvProcessEthernetPacket(NetworkBufferDescriptor_t * const pxNetworkBuffer );
 
 BaseType_t mayhem_interface_initialize ( struct xNetworkInterface *i) {
-    return 0;
+    return pdPASS;
 }
 
 BaseType_t mayhem_interface_output(
     struct xNetworkInterface *ni,
     NetworkBufferDescriptor_t * const pxNetworkBuffer,
     BaseType_t xReleaseAfterSend) {
-    return 0;
+    return pdTRUE;
 }
 
 BaseType_t mayhem_interface_get_link_status(struct xNetworkInterface *i) {
-    return 0;
+    return pdTRUE;
 }
 
 void mayhem_interface_manipulate_mac_address(
@@ -75,13 +75,13 @@ NetworkInterface_t *create_mayhem_interface() {
                                &xDefaultGatewayAddress_IPv6,
                                &xDefaultDNSServerAddress_IPv6,
                                ucDefaultMACAddress_IPv6 );
-    ep->bits.bIsDefault = 1;
-    ep->bits.bWantDHCP = 1;
-#if (ipconfigUSE_RA == 1)
-    ep->bits.bWantRA = 1;
-#endif
-    ep->bits.bIPv6 = 1;
-    ep->bits.bEndPointUp = 1;
+/*     ep->bits.bIsDefault = 1; */
+/*     ep->bits.bWantDHCP = 1; */
+/* #if (ipconfigUSE_RA == 1) */
+/*     ep->bits.bWantRA = 1; */
+/* #endif */
+/*     ep->bits.bIPv6 = 1; */
+/*     ep->bits.bEndPointUp = 1; */
     ni->pxEndPoint = ep;
     return FreeRTOS_AddNetworkInterface(ni);
 }
@@ -91,6 +91,10 @@ int init_network_buffer(NetworkBufferDescriptor_t *net, char *buf, size_t len) {
     net->pxEndPoint = net->pxInterface->pxEndPoint;
     net->pucEthernetBuffer = buf;
     net->xDataLength = len;
+    if (net->pxInterface == NULL && net->pxEndPoint == NULL) {
+        return -1;
+    }
+    return 0;
 }
 
 void release_network_buffer(NetworkBufferDescriptor_t *net) {

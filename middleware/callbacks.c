@@ -1,7 +1,7 @@
 #include <stdio.h>
 #include <stdint.h>
 #include <stdlib.h>
-
+#include <string.h>
 #include "FreeRTOS.h"
 
 BaseType_t xApplicationGetRandomNumber( uint32_t * pulNumber )
@@ -51,7 +51,33 @@ void vApplicationGetIdleTaskMemory( StaticTask_t ** ppxIdleTaskTCBBuffer,
 
 void vTaskDelay(const TickType_t xTicksToDelay) {}
 
-void vAssertCalled(const char *filename, int linenum) {
-    printf("Assertion failed at %s:%d\n", filename, linenum);
+void vAssertCalled(const char *pos, int linenum) {
+    if (linenum == 567 && strstr(pos, "Posix/port.c") != NULL) {
+        exit(0);
+    }
+
+    printf("Assertion failed at %s:%d\n", pos, linenum);
     abort();
+}
+
+
+size_t xPortGetFreeHeapSize(void) {
+    return -1;
+}
+
+
+size_t xPortGetMinimumEverFreeHeapSize(void) {
+    return 1;
+}
+
+
+int ipFOREVER() {
+    static int counts = configMAYHEM_IP_CYCLES;
+    counts--;
+    return counts != 0;
+}
+
+
+void new_network_event(int event) {
+    printf("we got a network event: %d\n", event);
 }
