@@ -41,7 +41,6 @@ add_subdirectory(middleware)
 function(create_harness name)
   add_executable(${name} harnesses/${name}/harness.c)
   target_link_libraries(${name} driver middleware)
-  target_include_directories(${name} PUBLIC middleware)
   set(workdir ${CMAKE_BINARY_DIR}/harnesses/${name})
   set_target_properties(${name} PROPERTIES
     RUNTIME_OUTPUT_DIRECTORY ${workdir}/root)

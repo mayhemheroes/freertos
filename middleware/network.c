@@ -86,7 +86,7 @@ NetworkInterface_t *create_mayhem_interface() {
     return FreeRTOS_AddNetworkInterface(ni);
 }
 
-int init_network_buffer(NetworkBufferDescriptor_t *net, char *buf, size_t len) {
+int init_network_buffer(NetworkBufferDescriptor_t *net, uint8_t *buf, size_t len) {
     net->pxInterface = create_mayhem_interface();
     net->pxEndPoint = net->pxInterface->pxEndPoint;
     net->pucEthernetBuffer = buf;

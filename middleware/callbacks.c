@@ -3,6 +3,7 @@
 #include <stdlib.h>
 #include <string.h>
 #include "FreeRTOS.h"
+#include "FreeRTOS_IP.h"
 
 BaseType_t xApplicationGetRandomNumber( uint32_t * pulNumber )
 {
@@ -28,7 +29,7 @@ BaseType_t xApplicationDNSQueryHook( const char * pcName )
     return pdTRUE;
 }
 
-BaseType_t xApplicationDNSQueryHook_Multi( struct xNetworkEndPoint * pxEndPoint,
+BaseType_t xApplicationDNSQueryHook_Multi( NetworkEndPoint_t * pxEndPoint,
                                            const char * pcName ) {
     return pdTRUE;
 }

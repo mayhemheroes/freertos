@@ -62,6 +62,7 @@
 #define configUSE_COUNTING_SEMAPHORES        1
 #define configTIMER_TASK_STACK_DEPTH         16
 
+void vAssertCalled(const char *pos, int line);
 #define configASSERT( x ) if( ( x ) == 0 ) vAssertCalled( __FILE__, __LINE__ )
 /* end of ivg additions */
 

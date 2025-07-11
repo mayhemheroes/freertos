@@ -1,11 +1,21 @@
 #include <stdio.h>
 #include <err.h>
 #include <fcntl.h>
+#include <stdlib.h>
 #include <unistd.h>
+#include <string.h>
 
 extern int mayhem_process_input(char *buf, size_t len);
+extern int mayhem_init(void);
+
+__attribute__((weak)) int mayhem_init(void) {
+    return 0;
+}
 
 int main(int argc, char *argv[]) {
+    if (mayhem_init() != 0) {
+        errx(1, "aborted by mayhem_init");
+    }
     int fd = 0;                 /* if no input read from the stdin */
     char buf[BUFSIZ];
 

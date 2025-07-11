@@ -9,3 +9,5 @@ target_link_libraries(middleware
   freertos_kernel
   freertos_plus_tcp
   freertos_config)
+
+target_include_directories(middleware PUBLIC .)

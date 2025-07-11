@@ -8,25 +8,30 @@
 #include <err.h>
 #include <unistd.h>
 
-int mayhem_process_input(char *buf, size_t len) {
-    xNetworkBuffersInitialise();
-    NetworkBufferDescriptor_t *net = pxGetNetworkBufferWithDescriptor(len, 0);
-    net->pxInterface = create_mayhem_interface();
-    net->pxEndPoint = net->pxInterface->pxEndPoint;
-    memcpy(net->pucEthernetBuffer, buf, len);
-    net->xDataLength = len;
+NetworkBufferDescriptor_t *net;
+NetworkInterface_t *iface;
 
+int mayhem_init() {
+    xNetworkBuffersInitialise();
+    iface = create_mayhem_interface();
+    if (iface == NULL) {
+        errx(1, "failed to create interface");
+    }
     if (FreeRTOS_IPInit_Multi() == pdFALSE) {
         errx(1, "failed to initialize network stack");
     }
-    IPStackEvent_t ev = { eNetworkRxEvent, NULL };
-    ev.pvData = (void *) net;
+    printf("network stack is initialized and ready\n");
+    return 0;
+}
 
-    if (xQueueSendToBack(xNetworkEventQueue, &ev, pdMS_TO_TICKS(250)) == pdFALSE) {
+int mayhem_process_input(char *buf, size_t len) {
+    net = pxGetNetworkBufferWithDescriptor(len, 0);
+    net->pxInterface = iface;
+    net->pxEndPoint = iface->pxEndPoint;
+    IPStackEvent_t ev = { eNetworkRxEvent, (void *) net };
+    if (xQueueSendToBack(xNetworkEventQueue, &ev, 0) == pdFALSE) {
         errx(1, "failed to send event to ip stack");
     }
-    printf("succesfully sent data up the network stack\n");
-    printf("starting the scheduler\n");
     vTaskStartScheduler();
     vTaskEndScheduler();
     return 0;
