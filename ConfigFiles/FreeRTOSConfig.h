@@ -60,7 +60,8 @@
 
 #define configUSE_MUTEXES                    1
 #define configUSE_COUNTING_SEMAPHORES        1
-#define configTIMER_TASK_STACK_DEPTH         16
+#define configTIMER_TASK_STACK_DEPTH 16
+#define configSTACK_DEPTH_TYPE uint32_t
 
 void vAssertCalled(const char *pos, int line);
 #define configASSERT( x ) if( ( x ) == 0 ) vAssertCalled( __FILE__, __LINE__ )

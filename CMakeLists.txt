@@ -20,11 +20,6 @@ target_include_directories(freertos_config SYSTEM INTERFACE
 )
 
 
-set( FREERTOS_PLUS_TCP_NETWORK_IF "POSIX" CACHE STRING "" FORCE)
-
-FetchContent_MakeAvailable(freertos_kernel)
-FetchContent_MakeAvailable(freertos_plus_tcp)
-
 set( SANITIZE "" CACHE STRING "Comma-separated list of compiler sanitizers to enable; empty string disables." )
 
 if( NOT ${SANITIZE} STREQUAL "" )
@@ -32,8 +27,14 @@ if( NOT ${SANITIZE} STREQUAL "" )
   add_link_options(-fsanitize=${SANITIZE})
 endif()
 add_compile_options(-g)
-target_compile_options(freertos_plus_tcp PUBLIC -g)
 
+add_subdirectory(port)
+
+set( FREERTOS_PORT A_CUSTOM_PORT)
+set( FREERTOS_PLUS_TCP_NETWORK_IF "LOOPBACK" CACHE STRING "" FORCE)
+FetchContent_MakeAvailable(freertos_kernel)
+FetchContent_MakeAvailable(freertos_plus_tcp)
+target_compile_options(freertos_plus_tcp PUBLIC -g)
 add_subdirectory(driver)
 add_subdirectory(middleware)
 

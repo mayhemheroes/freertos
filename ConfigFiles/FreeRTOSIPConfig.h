@@ -184,7 +184,7 @@
  * size of the task being created.  The same type is used to return information
  * about stack usage in various other API calls.  Defaults to size_t if left
  * undefined. */
-#define configSTACK_DEPTH_TYPE                     size_t
+#define configSTACK_DEPTH_TYPE                     uint32_t
 
 /* configMESSAGE_BUFFER_LENGTH_TYPE sets the type used to store the length of
  * each message written to a FreeRTOS message buffer (the length is also written

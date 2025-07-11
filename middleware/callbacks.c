@@ -4,6 +4,7 @@
 #include <string.h>
 #include "FreeRTOS.h"
 #include "FreeRTOS_IP.h"
+#include "task.h"
 
 BaseType_t xApplicationGetRandomNumber( uint32_t * pulNumber )
 {
@@ -38,6 +39,10 @@ const char *pcApplicationHostnameHook( void ) {
     return "localhost";
 }
 
+/* void vApplicationGetIdleTaskMemory( StaticTask_t ** ppxIdleTaskTCBBuffer, */
+/*                                     StackType_t ** ppxIdleTaskStackBuffer, */
+/*                                     configSTACK_DEPTH_TYPE * puxIdleTaskStackSize ); */
+
 void vApplicationGetIdleTaskMemory( StaticTask_t ** ppxIdleTaskTCBBuffer,
                                     StackType_t ** ppxIdleTaskStackBuffer,
                                     configSTACK_DEPTH_TYPE * puxIdleTaskStackSize )
@@ -49,6 +54,7 @@ void vApplicationGetIdleTaskMemory( StaticTask_t ** ppxIdleTaskTCBBuffer,
     *ppxIdleTaskStackBuffer = &( uxIdleTaskStack[ 0 ] );
     *puxIdleTaskStackSize = configMINIMAL_STACK_SIZE;
 }
+
 
 void vTaskDelay(const TickType_t xTicksToDelay) {}
 

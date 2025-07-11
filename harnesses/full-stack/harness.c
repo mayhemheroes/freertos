@@ -12,6 +12,7 @@ NetworkBufferDescriptor_t *net;
 NetworkInterface_t *iface;
 
 int mayhem_init() {
+    printf("calling init\n");
     xNetworkBuffersInitialise();
     iface = create_mayhem_interface();
     if (iface == NULL) {
@@ -25,6 +26,7 @@ int mayhem_init() {
 }
 
 int mayhem_process_input(char *buf, size_t len) {
+    printf("feeding %lu bytes of mayhem\n", len);
     net = pxGetNetworkBufferWithDescriptor(len, 0);
     net->pxInterface = iface;
     net->pxEndPoint = iface->pxEndPoint;
@@ -32,6 +34,7 @@ int mayhem_process_input(char *buf, size_t len) {
     if (xQueueSendToBack(xNetworkEventQueue, &ev, 0) == pdFALSE) {
         errx(1, "failed to send event to ip stack");
     }
+    printf("starting the main task\n");
     vTaskStartScheduler();
     vTaskEndScheduler();
     return 0;
