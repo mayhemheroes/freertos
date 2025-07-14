@@ -36,9 +36,10 @@ void *run_task(void *arg) {
 BaseType_t xPortStartScheduler( void )
 {
     for (int i = 0; i < total_tasks; i++) {
-        if (pthread_create(&tasks[i].tid, NULL, run_task, &tasks[i]) != 0) {
-            err(1, "failed to create task");
-        };
+        run_task(&tasks[i]);
+        /* if (pthread_create(&tasks[i].tid, NULL, run_task, &tasks[i]) != 0) { */
+        /*     err(1, "failed to create task"); */
+        /* }; */
     }
 
     return pdTRUE;
@@ -62,5 +63,4 @@ StackType_t * pxPortInitialiseStack( StackType_t * pxTopOfStack,
 }
 
 void vPortYield(void) {
-    printf("yielding...\n");
 }

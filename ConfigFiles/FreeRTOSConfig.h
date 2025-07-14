@@ -68,7 +68,7 @@ void vAssertCalled(const char *pos, int line);
 /* end of ivg additions */
 
 #define TEST
-#define configMAYHEM_IP_CYCLES                4
+#define configMAYHEM_IP_CYCLES                3
 
 #define ipconfigUSE_IPv4                    ( 1 )
 #define ipconfigUSE_IPv6                    ( 1 )

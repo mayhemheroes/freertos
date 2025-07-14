@@ -30,11 +30,11 @@ int mayhem_process_input(char *buf, size_t len) {
     net = pxGetNetworkBufferWithDescriptor(len, 0);
     net->pxInterface = iface;
     net->pxEndPoint = iface->pxEndPoint;
+    memcpy(net->pucEthernetBuffer, buf, len);
     IPStackEvent_t ev = { eNetworkRxEvent, (void *) net };
     if (xQueueSendToBack(xNetworkEventQueue, &ev, 0) == pdFALSE) {
         errx(1, "failed to send event to ip stack");
     }
-    printf("starting the main task\n");
     vTaskStartScheduler();
     vTaskEndScheduler();
     return 0;

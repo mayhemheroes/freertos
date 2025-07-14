@@ -56,7 +56,7 @@ cmds:
 ")
 
   # probably it is better to use mayhem package here.
-  if(${SANITIZE} STREQUAL "address")
+  if("${SANITIZE}" STREQUAL "address")
     file(
       COPY /usr/lib/x86_64-linux-gnu/libasan.so.6
       DESTINATION ${workdir}/root/lib
