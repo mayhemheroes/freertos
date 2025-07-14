@@ -80,6 +80,7 @@ size_t xPortGetMinimumEverFreeHeapSize(void) {
 
 int ipFOREVER() {
     static int counts = configMAYHEM_IP_CYCLES;
+    printf("ipFOREVER is called\n");
     counts--;
     return counts != 0;
 }
