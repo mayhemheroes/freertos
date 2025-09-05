@@ -57,8 +57,9 @@ cmds:
 
   # probably it is better to use mayhem package here.
   if("${SANITIZE}" STREQUAL "address")
+    file(GLOB SANINTIZERS "/usr/lib/x86_64-linux-gnu/libasan.so.*")
     file(
-      COPY /usr/lib/x86_64-linux-gnu/libasan.so.6
+      COPY ${SANITIZERS}
       DESTINATION ${workdir}/root/lib
       FOLLOW_SYMLINK_CHAIN)
   endif()
