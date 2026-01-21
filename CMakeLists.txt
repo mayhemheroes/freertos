@@ -1,18 +1,5 @@
 cmake_minimum_required(VERSION 3.15.0)
 project ("FreeRTOS TCP/IP Mayhem Harnesses" VERSION 1.0.0 LANGUAGES C)
-include(FetchContent)
-
-FetchContent_Declare( freertos_kernel
-  GIT_REPOSITORY https://github.com/FreeRTOS/FreeRTOS-Kernel.git
-  GIT_TAG        main
-)
-
-FetchContent_Declare( freertos_plus_tcp
-  GIT_REPOSITORY https://github.com/FreeRTOS/FreeRTOS-Plus-TCP.git
-  GIT_TAG        main
-  GIT_SUBMODULES ""
-)
-
 
 add_library(freertos_config INTERFACE)
 target_include_directories(freertos_config SYSTEM INTERFACE
@@ -27,17 +14,16 @@ if( NOT ${SANITIZE} STREQUAL "" )
   add_link_options(-fsanitize=${SANITIZE})
 endif()
 add_compile_options(-g)
-
 add_subdirectory(port)
 
 set( FREERTOS_PORT A_CUSTOM_PORT)
 set( FREERTOS_PLUS_TCP_NETWORK_IF "LOOPBACK" CACHE STRING "" FORCE)
-FetchContent_MakeAvailable(freertos_kernel)
-FetchContent_MakeAvailable(freertos_plus_tcp)
+
+add_subdirectory(freertos_kernel)
+add_subdirectory(freertos_plus_tcp)
 target_compile_options(freertos_plus_tcp PUBLIC -g)
 add_subdirectory(driver)
 add_subdirectory(middleware)
-
 
 function(create_harness name)
   add_executable(${name} harnesses/${name}/harness.c)
