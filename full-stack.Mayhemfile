@@ -1,0 +1,4 @@
+project: freertos
+target: full-stack
+cmds:
+  - cmd: /source/mayhem/harnesses/full-stack/root/full-stack @@
