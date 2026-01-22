@@ -6,3 +6,4 @@
 *.log
 *.zip
 /mayhem/
+rlenv/mayhem/data/testsuite
