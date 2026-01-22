@@ -79,7 +79,6 @@ jobs:
           args: >-
             --image ${{ needs.build.outputs.image }}
             --file ${{ matrix.mayhemfile }}
-            --testsuite testsuite
             --duration 600
           sarif-output: sarif
 
